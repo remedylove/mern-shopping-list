@@ -21,12 +21,10 @@ class AppNavbar extends Component   {
     }
 
     toggle = () => {
-        this.setState(prevState =>  {
-            return {
+        this.setState(prevState =>  ({
                 ...prevState,
                 isOpen: !prevState.isOpen
-            }
-        })
+            }));
     }
 
     render()    {
