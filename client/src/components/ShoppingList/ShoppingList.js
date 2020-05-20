@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Fade } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getItems, deleteItem } from '../../actions/itemActions';
+import ShoppingListItem from '../ShoppingListItem/ShoppingListItem';
 import PropTypes from 'prop-types';
 
 export class ShoppingList extends Component {
@@ -15,30 +15,21 @@ export class ShoppingList extends Component {
         this.props.deleteItem(id);
     }
 
+    onDoneClick = _id => {
+        const item = document.getElementById(_id);
+        item.style.textDecoration = 'line-through';
+        item.style.color = '#707070';
+    }
+
     render() {
         const { items } = this.props.item;
         return (
             <div>
-                <Container>
-                    <ListGroup>
-                        <TransitionGroup className="shopping-list">
-                            {items.map(({ _id, name }) =>  (
-                                <CSSTransition key={_id} timeout={500} classNames="fade">
-                                    <ListGroupItem>
-                                        <Button
-                                            className="remove-btn"
-                                            color="danger"
-                                            size="sm"
-                                            style={{marginRight: '.5rem'}}
-                                            onClick={this.onDeleteClick.bind(this, _id)}
-                                        >&times;</Button>
-                                        {name}
-                                    </ListGroupItem>
-                                </CSSTransition>
-                            ))}
-                        </TransitionGroup>
-                    </ListGroup>
-                </Container>
+                {items.map(item =>  (
+                    <Fade key={item._id} in timeout={500}>
+                        <ShoppingListItem item={item} onDoneClick={this.onDoneClick} onDeleteClick={this.onDeleteClick} />
+                    </Fade>
+                ))}
             </div>
         )
     }

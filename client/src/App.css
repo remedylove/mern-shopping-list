@@ -1,4 +1,8 @@
-.fade-enter {
+* {
+  outline: 'none'
+}
+
+/* .fade-enter {
   opacity: .01;
 }
 
@@ -14,4 +18,4 @@
 .fade-exit-active {
   opacity: .01;
   transition: opacity 500ms ease-in;
-}
+} */
