@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Fade } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getItems, deleteItem } from '../../actions/itemActions';
+import { getItems, deleteItem, updateItem } from '../../actions/itemActions';
 import ShoppingListItem from '../ShoppingListItem/ShoppingListItem';
 import PropTypes from 'prop-types';
 
@@ -16,9 +16,12 @@ export class ShoppingList extends Component {
     }
 
     onDoneClick = _id => {
-        const item = document.getElementById(_id);
-        item.style.textDecoration = 'line-through';
-        item.style.color = '#707070';
+
+        const isDone = {
+            done: true
+        }
+
+        this.props.updateItem(_id, isDone);
     }
 
     render() {
@@ -26,9 +29,11 @@ export class ShoppingList extends Component {
         return (
             <div>
                 {items.map(item =>  (
-                    <Fade key={item._id} in timeout={500}>
+                    !item.done
+                    ? <Fade key={item._id} in timeout={500}>
                         <ShoppingListItem item={item} onDoneClick={this.onDoneClick} onDeleteClick={this.onDeleteClick} />
                     </Fade>
+                    : null
                 ))}
             </div>
         )
@@ -45,4 +50,4 @@ const mapStateToProps = (state) =>  ({
 });
 
 
-export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem, updateItem })(ShoppingList);

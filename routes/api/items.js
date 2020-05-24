@@ -8,7 +8,7 @@ const Item = require('../../models/Item');
 //@desc Get All items
 //@access Public
 router.get('/', (req, res) => {
-    Item.find()
+    Item.find({})
         .sort({ date: -1})
         .then(items => res.json(items));
 });
@@ -31,6 +31,25 @@ router.delete('/:id', (req, res) => {
     Item.findById(req.params.id)
         .then(item => item.remove().then(() => res.json({success: true })))
         .catch(err => res.status(404).json({success: false}));
-})
+});
+
+router.put('/:id', (req, res) =>    {
+    
+    const doneItem = {
+        done: req.body.done
+    }
+
+    Item.findByIdAndUpdate(
+        req.params.id,
+        doneItem,
+        (err) =>   {
+            if (err)    {
+                res.json({
+                    sucess: false
+                })
+            }
+        }
+    ).then(doneItem => res.json(doneItem));
+});
 
 module.exports = router;

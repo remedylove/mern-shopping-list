@@ -8,6 +8,7 @@ import './App.css';
 
 import { Provider }from 'react-redux';
 import store from './store';
+import ShoppingListDone from './components/ShoppingListDone/ShoppingListDone';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Container style={{width: '50%'}}>
           <NewItemBar />
           <ShoppingList />
+          <ShoppingListDone />
         </Container>
       </div>
     </Provider>
